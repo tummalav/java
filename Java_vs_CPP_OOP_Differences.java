@@ -14,6 +14,16 @@
  * 8. Memory Management (C++ manual, Java GC)
  * 9. Default Constructors
  * 10. Access Control Differences
+ * 11. Abstract Classes and Interfaces
+ * 12. Pointers (C++ YES, Java NO - references only)
+ * 13. Templates vs Generics
+ * 14. Friend Functions (C++ YES, Java NO)
+ * 15. Inner/Nested Classes
+ * 16. Static Members and Methods
+ * 17. Final/Const Keyword Differences
+ * 18. Method Overloading and Overriding
+ * 19. This Pointer vs This Reference
+ * 20. Summary and Complete Comparison
  *
  * Author: Complete OOP Comparison Guide
  * Date: February 8, 2026
@@ -726,12 +736,433 @@ public class Java_vs_CPP_OOP_Differences {
     }
 
     //=============================================================================
-    // 10. SUMMARY COMPARISON TABLE
+    // 10. ABSTRACT CLASSES AND INTERFACES
     //=============================================================================
 
-    static void printSummaryTable() {
+    /**
+     * C++: Abstract classes (with pure virtual functions) and interfaces (abstract classes with only pure virtual functions)
+     * Java: Abstract classes (with or without abstract methods) and interfaces (with only abstract methods)
+     */
+    static void demonstrateAbstractClassesAndInterfaces() {
         System.out.println("\n╔════════════════════════════════════════════════════════════╗");
-        System.out.println("║  10. COMPLETE OOP COMPARISON TABLE                         ║");
+        System.out.println("║  10. ABSTRACT CLASSES AND INTERFACES                       ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ Abstract Classes and Interfaces:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Shape {                              // Abstract class");
+        System.out.println("public:");
+        System.out.println("    virtual void draw() = 0;              // Pure virtual function");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("class Circle : public Shape {              // Concrete class");
+        System.out.println("public:");
+        System.out.println("    void draw() override { }               // Overrides base method");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("Shape* s = new Circle();                  // Can use base class pointer");
+        System.out.println("s->draw();                                // Calls Circle's draw()");
+
+        System.out.println("\nJava Abstract Classes and Interfaces:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("abstract class Shape {                     // Abstract class");
+        System.out.println("    abstract void draw();                 // Abstract method");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("class Circle extends Shape {               // Concrete class");
+        System.out.println("    void draw() { }                       // Implements abstract method");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("Shape s = new Circle();                  // Reference variable");
+        System.out.println("s.draw();                                // Calls Circle's draw()");
+
+        System.out.println("\nKey Differences:");
+        System.out.println("• C++:  Abstract class = any virtual method, Interface = pure virtual class");
+        System.out.println("• Java: Abstract class = may have concrete methods, Interface = all abstract methods");
+        System.out.println("        Interfaces are implemented, not inherited");
+    }
+
+    //=============================================================================
+    // 11. POINTERS (C++ YES, Java NO - references only)
+    //=============================================================================
+
+    /**
+     * C++: Supports POINTERS (explicit pointer syntax)
+     * Java: NO pointers, only references (implicit)
+     */
+    static void demonstratePointers() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  11. POINTERS (C++ YES, Java NO - references only)      ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ Pointers:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("int x = 10;");
+        System.out.println("int* p = &x;               // Pointer to x");
+        System.out.println("*p = 20;                   // Change value of x");
+        System.out.println("int y = *p;                // y is 20");
+        System.out.println();
+        System.out.println("class Order { };");
+        System.out.println("Order* ptr = new Order();   // Pointer to Order");
+        System.out.println("delete ptr;                 // Free memory");
+
+        System.out.println("\nJava References (No explicit pointers):");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("int x = 10;");
+        System.out.println("int y = x;                  // Copy of value");
+        System.out.println("y = 20;                     // x is still 10");
+        System.out.println();
+        System.out.println("class Order { };");
+        System.out.println("Order obj = new Order();    // Reference to Order");
+        System.out.println("Order ref = obj;            // Another reference to same object");
+
+        System.out.println("\nKey Difference:");
+        System.out.println("• C++:  Pointers are explicit, can be null, pointer arithmetic");
+        System.out.println("        Must manage memory (new/delete)");
+        System.out.println("• Java: References are implicit, cannot be null (but objects can be)");
+        System.out.println("        No pointer arithmetic, no manual memory management");
+    }
+
+    //=============================================================================
+    // 12. TEMPLATES vs GENERICS
+    //=============================================================================
+
+    /**
+     * C++: Supports TEMPLATES (compile-time polymorphism)
+     * Java: Supports GENERICS (runtime polymorphism)
+     */
+    static void demonstrateTemplatesVsGenerics() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  12. TEMPLATES vs GENERICS                                ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ Templates:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("template <typename T>");
+        System.out.println("class Box {");
+        System.out.println("    T value;");
+        System.out.println("public:");
+        System.out.println("    Box(T val) : value(val) { }");
+        System.out.println("    T getValue() { return value; }");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("Box<int> intBox(123);");
+        System.out.println("Box<double> dblBox(456.78);");
+        System.out.println("intBox.getValue();                // Returns int");
+        System.out.println("dblBox.getValue();                // Returns double");
+
+        System.out.println("\nJava Generics:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Box<T> {");
+        System.out.println("    private T value;");
+        System.out.println("    public Box(T val) { value = val; }");
+        System.out.println("    public T getValue() { return value; }");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("Box<Integer> intBox = new Box<>(123);");
+        System.out.println("Box<Double> dblBox = new Box<>(456.78);");
+        System.out.println("intBox.getValue();                // Returns Integer");
+        System.out.println("dblBox.getValue();                // Returns Double");
+
+        System.out.println("\nKey Difference:");
+        System.out.println("• C++:  Templates are resolved at compile-time (type safety)");
+        System.out.println("        Can have non-type parameters");
+        System.out.println("• Java: Generics are implemented at runtime (type erasure)");
+        System.out.println("        Cannot have primitive types, must use wrapper classes");
+    }
+
+    //=============================================================================
+    // 13. FRIEND FUNCTIONS
+    //=============================================================================
+
+    /**
+     * C++: Supports FRIEND FUNCTIONS (non-member functions with access to private members)
+     * Java: NO friend functions (all functions are members of a class)
+     */
+    static void demonstrateFriendFunctions() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  13. FRIEND FUNCTIONS                                      ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ Friend Functions:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("    private:");
+        System.out.println("        int price;");
+        System.out.println("    public:");
+        System.out.println("        Order(int p) : price(p) { }");
+        System.out.println("        friend void displayPrice(Order& o);  // Friend function");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("void displayPrice(Order& o) {");
+        System.out.println("    cout << o.price;                // Accesses private member");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("Order order(100);");
+        System.out.println("displayPrice(order);                // Calls friend function");
+
+        System.out.println("\nJava (No friend functions):");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("    private int price;");
+        System.out.println("    public Order(int p) { price = p; }");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("// Cannot access private member directly");
+        System.out.println("Order order = new Order(100);");
+        System.out.println("// displayPrice(order);              // ❌ Compile error!");
+
+        System.out.println("\nKey Difference:");
+        System.out.println("• C++:  Friend functions can access private members");
+        System.out.println("        Useful for operator overloading, non-member functions");
+        System.out.println("• Java: NO friend functions");
+        System.out.println("        All functions are members of a class");
+    }
+
+    //=============================================================================
+    // 14. INNER/NESTED CLASSES
+    //=============================================================================
+
+    /**
+     * C++: Supports INNER/NESTED CLASSES (defined within another class)
+     * Java: Supports INNER/NESTED CLASSES and STATIC NESTED CLASSES
+     */
+    static void demonstrateInnerClasses() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  14. INNER/NESTED CLASSES                                  ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ Inner/Nested Classes:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Outer {");
+        System.out.println("    class Inner {                  // Inner class");
+        System.out.println("        void display() { }");
+        System.out.println("    };");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("Outer::Inner obj;                // Instantiate inner class");
+
+        System.out.println("\nJava Inner/Nested Classes:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Outer {");
+        System.out.println("    class Inner {                  // Inner class");
+        System.out.println("        void display() { }");
+        System.out.println("    }");
+        System.out.println();
+        System.out.println("    static class StaticNested {    // Static nested class");
+        System.out.println("        void show() { }");
+        System.out.println("    }");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("Outer.Inner obj = new Outer().new Inner();          // Inner class");
+        System.out.println("Outer.StaticNested staticObj = new Outer.StaticNested();  // Static nested class");
+
+        System.out.println("\nKey Differences:");
+        System.out.println("• C++:  Inner classes have access to outer class's private members");
+        System.out.println("        Must use scope resolution (::) to access");
+        System.out.println("• Java: Inner classes also have access to outer class's private members");
+        System.out.println("        Can use 'new' keyword to instantiate");
+        System.out.println("        Static nested classes do not have this reference");
+    }
+
+    //=============================================================================
+    // 15. STATIC MEMBERS AND METHODS
+    //=============================================================================
+
+    /**
+     * C++: Supports STATIC MEMBERS and METHODS (class-level, shared across all instances)
+     * Java: Supports STATIC MEMBERS and METHODS (class-level, shared across all instances)
+     */
+    static void demonstrateStaticMembersAndMethods() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  15. STATIC MEMBERS AND METHODS                            ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ Static Members and Methods:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("    static int count;            // Static member");
+        System.out.println("public:");
+        System.out.println("    Order() { count++; }         // Increment count");
+        System.out.println("    static int getCount() { return count; }  // Static method");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("Order o1, o2, o3;");
+        System.out.println("int total = Order::getCount();    // Access static method");
+
+        System.out.println("\nJava Static Members and Methods:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("    static int count;            // Static member");
+        System.out.println("    public Order() { count++; }  // Increment count");
+        System.out.println("    static int getCount() { return count; }  // Static method");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("Order o1 = new Order(), o2 = new Order(), o3 = new Order();");
+        System.out.println("int total = Order.getCount();      // Access static method");
+
+        System.out.println("\nKey Similarities:");
+        System.out.println("• Both C++ and Java support static members and methods");
+        System.out.println("• Static members are shared across all instances");
+        System.out.println("• Static methods can be called without an instance");
+
+        System.out.println("\nKey Differences:");
+        System.out.println("• C++:  Must use scope resolution (::) to access static members/methods");
+        System.out.println("• Java: Can access directly using class name (no :: needed)");
+    }
+
+    //=============================================================================
+    // 16. FINAL/CONST KEYWORD DIFFERENCES
+    //=============================================================================
+
+    /**
+     * C++: const (variables, pointers, member functions), constexpr (compile-time constants)
+     * Java: final (variables, methods, classes), strictfp (floating-point consistency)
+     */
+    static void demonstrateFinalConstDifferences() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  16. FINAL/CONST KEYWORD DIFFERENCES                     ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ const and constexpr:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("const int x = 10;                // Constant variable");
+        System.out.println("constexpr int y = 20;            // Compile-time constant");
+        System.out.println("const int* p = &x;              // Pointer to constant");
+        System.out.println("int* const q = &x;              // Constant pointer");
+        System.out.println("const int& r = x;               // Reference to constant");
+        System.out.println();
+        System.out.println("class Order {");
+        System.out.println("    void process() const { }      // Const member function");
+        System.out.println("};");
+
+        System.out.println("\nJava final and strictfp:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("final int x = 10;                // Constant variable");
+        System.out.println("int y = 20;");
+        System.out.println("y = 30;                         // Not final, can be changed");
+        System.out.println();
+        System.out.println("class Order {");
+        System.out.println("    final void process() { }      // Final method (cannot be overridden)");
+        System.out.println("    static final int MAX_ORDERS = 100;  // Constant static variable");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("strictfp class Calculator {       // Strict floating-point consistency");
+        System.out.println("    strictfp void calculate() { }  // All calculations in this method are strict");
+        System.out.println("}");
+
+        System.out.println("\nKey Differences:");
+        System.out.println("• C++:  const = variable or pointer is constant");
+        System.out.println("        constexpr = compile-time constant");
+        System.out.println("        Can have const member functions");
+        System.out.println("• Java: final = variable, method, or class cannot be changed/overridden");
+        System.out.println("        strictfp = strict floating-point consistency");
+    }
+
+    //=============================================================================
+    // 17. METHOD OVERLOADING AND OVERRIDING
+    //=============================================================================
+
+    /**
+     * C++: Supports METHOD OVERLOADING and OVERRIDING
+     * Java: Supports METHOD OVERLOADING and OVERRIDING
+     */
+    static void demonstrateMethodOverloadingAndOverriding() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  17. METHOD OVERLOADING AND OVERRIDING                    ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ Method Overloading and Overriding:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("public:");
+        System.out.println("    void process() { }          // Original method");
+        System.out.println("    void process(int id) { }    // Overloaded method");
+        System.out.println("    virtual void execute() { }  // Virtual method");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("class LimitOrder : public Order {");
+        System.out.println("public:");
+        System.out.println("    void process() { }          // Hides base method");
+        System.out.println("    void execute() override { } // Overrides base method");
+        System.out.println("};");
+
+        System.out.println("\nJava Method Overloading and Overriding:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("    void process() { }          // Original method");
+        System.out.println("    void process(int id) { }    // Overloaded method");
+        System.out.println("    void execute() { }          // Non-virtual method");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("class LimitOrder extends Order {");
+        System.out.println("    void process() { }          // Overrides (not hiding)");
+        System.out.println("    void execute() { }          // Cannot override (non-virtual)");
+        System.out.println("}");
+
+        System.out.println("\nKey Similarities:");
+        System.out.println("• Both C++ and Java support method overloading (same method name, different parameters)");
+        System.out.println("• Both support method overriding (subclass provides specific implementation)");
+
+        System.out.println("\nKey Differences:");
+        System.out.println("• C++:  Must use 'virtual' keyword for polymorphic behavior");
+        System.out.println("        Can overload based on constness (const int vs int)");
+        System.out.println("• Java: All non-static methods are virtual by default (except final, private, static)");
+        System.out.println("        Cannot overload based on return type alone");
+    }
+
+    //=============================================================================
+    // 18. THIS POINTER vs THIS REFERENCE
+    //=============================================================================
+
+    /**
+     * C++: 'this' is an explicit pointer to the current object
+     * Java: 'this' is an implicit reference to the current object
+     */
+    static void demonstrateThisPointerVsThisReference() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  18. THIS POINTER vs THIS REFERENCE                        ║");
+        System.out.println("╚════════════════════════════════════════════════════════════╝\n");
+
+        System.out.println("C++ This Pointer:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("public:");
+        System.out.println("    void process() {");
+        System.out.println("        this->validate();         // Explicit this pointer");
+        System.out.println("    }");
+        System.out.println("    void validate() { }");
+        System.out.println("};");
+        System.out.println();
+        System.out.println("Order order;");
+        System.out.println("order.process();                  // Calls process()");
+
+        System.out.println("\nJava This Reference:");
+        System.out.println("───────────────────────────────────────────────────────────");
+        System.out.println("class Order {");
+        System.out.println("    void process() {");
+        System.out.println("        this.validate();          // Implicit this reference");
+        System.out.println("    }");
+        System.out.println("    void validate() { }");
+        System.out.println("}");
+        System.out.println();
+        System.out.println("Order order = new Order();        // Create new instance");
+        System.out.println("order.process();                  // Calls process()");
+
+        System.out.println("\nKey Differences:");
+        System.out.println("• C++:  this is an explicit pointer, must use '->' to access members");
+        System.out.println("        Can be null, must check in member functions");
+        System.out.println("• Java: this is an implicit reference, no need to use '->'");
+        System.out.println("        Cannot be null, always refers to current object");
+    }
+
+    //=============================================================================
+    // 19. SUMMARY AND COMPLETE COMPARISON
+    //=============================================================================
+
+    static void printCompleteComparison() {
+        System.out.println("\n╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║  19. COMPLETE OOP COMPARISON                               ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝\n");
 
         System.out.println("┌──────────────────────────┬────────────────────────┬────────────────────────┐");
@@ -755,6 +1186,13 @@ public class Java_vs_CPP_OOP_Differences {
         System.out.println("│ Friend functions         │ ✅ YES                 │ ❌ NO                  │");
         System.out.println("│ Templates/Generics       │ Templates (compile)    │ Generics (runtime)     │");
         System.out.println("│ Multiple dispatch        │ ❌ NO                  │ ❌ NO                  │");
+        System.out.println("│ Abstract classes         │ Pure virtual functions  │ Abstract classes       │");
+        System.out.println("│ Pointers                 │ ✅ YES                 │ ❌ NO (references only)│");
+        System.out.println("│ Static members           │ ✅ YES                 │ ✅ YES                 │");
+        System.out.println("│ Final/Const              │ const, constexpr       │ final                  │");
+        System.out.println("│ Method overloading       │ ✅ YES                 │ ✅ YES                 │");
+        System.out.println("│ Method overriding        │ ✅ YES                 │ ✅ YES                 │");
+        System.out.println("│ This pointer/reference   │ Pointer (explicit)    │ Reference (implicit)   │");
         System.out.println("└──────────────────────────┴────────────────────────┴────────────────────────┘");
     }
 
@@ -779,7 +1217,16 @@ public class Java_vs_CPP_OOP_Differences {
         demonstrateDestructors();
         demonstrateDefaultConstructors();
         demonstrateAccessControl();
-        printSummaryTable();
+        demonstrateAbstractClassesAndInterfaces();
+        demonstratePointers();
+        demonstrateTemplatesVsGenerics();
+        demonstrateFriendFunctions();
+        demonstrateInnerClasses();
+        demonstrateStaticMembersAndMethods();
+        demonstrateFinalConstDifferences();
+        demonstrateMethodOverloadingAndOverriding();
+        demonstrateThisPointerVsThisReference();
+        printCompleteComparison();
 
         System.out.println("\n╔════════════════════════════════════════════════════════════════╗");
         System.out.println("║  KEY TAKEAWAYS                                                 ║");
